@@ -2,8 +2,10 @@
 
 
 #include "Character/BaseCharacter.h"
+#include "GameFramework/Character.h"
 #include "Components/StaticMeshComponent.h" 
 #include "Components/CapsuleComponent.h"
+#include "Components/SceneComponent.h"
 #include "Engine/Engine.h" 
 
 
@@ -15,15 +17,36 @@ ABaseCharacter::ABaseCharacter()
 
 	PrimaryActorTick.bCanEverTick = false;
 
-	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	StaticMeshComponent->SetupAttachment(GetCapsuleComponent());
-	StaticMeshComponent->SetGenerateOverlapEvents(false);
-	StaticMeshComponent->SetSimulatePhysics(false);
-	StaticMeshComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetMesh()->SetupAttachment(GetCapsuleComponent());
+	GetMesh()->SetGenerateOverlapEvents(false);
+	GetMesh()->SetSimulatePhysics(false);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	//gameplay:
+	SetCanBeDamaged(true);
 	AttributeComponent = CreateDefaultSubobject<UAttributeComponent>(TEXT("AttributeSet"));
 	ActionComponent =CreateDefaultSubobject<UActionComponent>(TEXT("ActionComponent"));
+	//AttributeComponent->OnDeath.BindUFunction(this, FName("DeathHandle"));
+	
+
+	//Debug only:
+	ShootDebugSceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ShootDebugSceneComponent"));
+	ShootDebugSceneComponent->SetupAttachment(GetRootComponent());
+	ShootDebugSceneComponent->ResetRelativeTransform();
+	ShootDebugSceneComponent->SetRelativeLocation(FVector(80, 0, 60));
+}
+
+float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	AttributeComponent->AddHealth(-DamageAmount);
+
+	UE_LOG(LogTemp, Warning, TEXT("take damage "));
+	return -DamageAmount;
+}
+
+void ABaseCharacter::DeathHandle() {
+	UE_LOG(LogTemp, Warning, TEXT("Death"));
+	
 
 }
 
@@ -31,8 +54,8 @@ ABaseCharacter::ABaseCharacter()
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	GEngine->AddOnScreenDebugMessage(2, 4.0f, FColor::Green, FString("CharacterPlay"));
-
+	
+	
 }
 
 // Called to bind functionality to input
@@ -42,14 +65,17 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 }
 
-
-UAttributeComponent* ABaseCharacter::GetAttributeComponent_Implementation()
-{
-	return AttributeComponent;
-}
+//
+//UAttributeComponent* ABaseCharacter::GetAttributeComponent_Implementation()
+//{
+//	return AttributeComponent;
+//}
 
 void ABaseCharacter::DebugCheckAssignVariables()
 {
 	
 }
+
+
+
 

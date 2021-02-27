@@ -1,6 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
+//includes necessary for all actions:
+#include "Character/BaseCharacter.h"
+#include "Melee/ActionComponent.h"
+
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
@@ -12,7 +16,7 @@ class UActionComponent;
  *
  */
 
-//UCLASS(BlueprintType, Blueprintable,  meta = (ShortTooltip = "For making special abilities."))
+ //UCLASS(BlueprintType, Blueprintable,  meta = (ShortTooltip = "For making special abilities."))
 UCLASS(Blueprintable)
 class BINDINGOFISSAC3D_API UActionObject : public UObject
 {
@@ -34,14 +38,15 @@ public:
 		virtual void ActionStop();
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-		virtual bool TryInitializeAction(UActionComponent* _OwningActionComponent);
+		virtual void InitializeAction(UActionComponent* _OwningActionComponent);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-		virtual bool TryUninitializeAction();
+		virtual void UninitializeAction();
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		virtual bool CheckIfActionCanRun();
 
+	UActionComponent* GetOwningActionComponent() const {return OwningActionComponent; }
 
 };
 

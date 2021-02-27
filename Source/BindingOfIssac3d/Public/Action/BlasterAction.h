@@ -6,39 +6,57 @@
 #include "Action/ActionObject.h"
 #include "BlasterAction.generated.h"
 
-class ASolidProjectile;
 class USoundBase;
 class ASolidProjectile;
 class USceneComponent;
+class UWorld;
+
 
 /**
- * 
+ *
  */
 UCLASS()
 class BINDINGOFISSAC3D_API UBlasterAction : public UActionObject
 {
 	GENERATED_BODY()
 
-	//protected:
-	//UFUNCTION()
- //       void OnFire();
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = melee)
+		float ShootDamage = 20;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = melee)
-	//float ShootDamage = 20;
+	/**in seconds the pause between bullets*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = melee)
+		float ShootRate = 0.2f;
 
-	///**in seconds the pause between bullets*/
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = melee)
-	//float ShootRate = 0.2f;
+	UPROPERTY()
+		float LastShootTime;
 
-	//UPROPERTY()
-	//float LastShootTime;
+	/** Sound to play each time we fire */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = asthetic)
+		USoundBase* FireSound;
 
-	///** Sound to play each time we fire */
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = asthetic)
-	//USoundBase* FireSound;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = melee)
+		TSubclassOf<ASolidProjectile> DebugProjectileClass;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = melee)
-	//TSubclassOf<ASolidProjectile> ProjectileClass;
+	FTimerHandle TimerHandle_TimeBetweenShots;
 
-	//FTimerHandle TimerHandle_TimeBetweenShots;
+	USceneComponent* ShootSceneComponent;
+
+	UWorld* CurrentWorld;
+
+	AActor* OwningActor;
+
+	virtual void ActionImplementation()override;
+
+
+public:
+	virtual void ActionStart() override;
+	virtual void ActionStop() override;
+		virtual void InitializeAction(UActionComponent* _OwningActionComponent)override;
+		virtual void UninitializeAction()override;
+		virtual bool CheckIfActionCanRun()override;
+
+
 };
+
+

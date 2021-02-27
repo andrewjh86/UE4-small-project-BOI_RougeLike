@@ -38,6 +38,8 @@ void ABindingOfIssac3dProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* Ot
 	{
 		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
 
+		
+
 		Destroy();
 	}
 }

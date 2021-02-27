@@ -9,6 +9,7 @@
 class USphereComponent;
 class UProjectileMovementComponent;
 class UStaticMeshComponent;
+class ABaseCharacter;
 
 UCLASS()
 class BINDINGOFISSAC3D_API ASolidProjectile : public AActor
@@ -21,24 +22,31 @@ protected:
 	ASolidProjectile();
 
 	/** Sphere collision component */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = World)
 		USphereComponent* CollisionComp;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = World)
 		UStaticMeshComponent* MeshComp;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = melee)
-		float HitDamage = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attribute)
+		float HitDamage = 20;
 		
 	/** Projectile movement component */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Projectile, meta = (AllowPrivateAccess = "true"))
 		UProjectileMovementComponent* ProjectileMovement;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Action)
+		ABaseCharacter* OwningCharacter;
+
 public:
-	void SetHitDamage(float amount);
-	/** called when projectile hits something */
+	//UFUNCTION(BlueprintCallable, Category = Action)
+		virtual void InitializeProjectile(float DamageAmount);
+
+	UFUNCTION(blueprintcallable, category = Action)
+		virtual void InitializeProjectile(float DamageAmount, ABaseCharacter* _OwningCharacter);
+
 	UFUNCTION()
-		void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+		virtual void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	/** Returns CollisionComp subobject **/
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }

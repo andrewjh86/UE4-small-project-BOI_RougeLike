@@ -3,6 +3,8 @@
 
 #include "Attribute/AttributeComponent.h"
 
+
+
 // Sets default values for this component's properties
 UAttributeComponent::UAttributeComponent()
 {
@@ -24,7 +26,8 @@ void UAttributeComponent::AddHealth(float amount)
 
 	if (Health <= 0.0f)
 	{
-		bIsDead = true;
+		bDead = true;
+		OnDeath.ExecuteIfBound();
 	}
 }
 

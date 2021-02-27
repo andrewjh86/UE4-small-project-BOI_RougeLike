@@ -61,8 +61,9 @@ void UBlasterComponent::OnFire()
 				//ActorSpawnParams.Instigator = GetOwner(); //for if blaster is owned by pawn
 				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
+				
 				ASolidProjectile *Projectile =World->SpawnActor<ASolidProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
-				Projectile->SetHitDamage(ShootDamage);
+				//Projectile->SetHitDamage(ShootDamage);
 		}
 	}
 

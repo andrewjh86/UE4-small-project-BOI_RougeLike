@@ -9,6 +9,7 @@
 #include "ActionComponent.generated.h"
 
 class UActionObject;
+class ABaseCharacter;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BINDINGOFISSAC3D_API UActionComponent : public UActorComponent
@@ -23,15 +24,18 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY()
+		ABaseCharacter* OwningBaseCharacter;
+
+	UFUNCTION()
+		void InitializeActionComponent();
 
 public:	
-	UFUNCTION()
-		bool TryInitializeActionComponent();
 
 	UFUNCTION()
 		bool TrySwapActionObject();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Action")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category = "Action")
 	TSubclassOf<UActionObject> PrimaryActionClass;
 
 	UPROPERTY()
@@ -42,5 +46,8 @@ public:
 
 	UFUNCTION()
 		void StopPrimaryAction();
+
+	ABaseCharacter* GetOwningBaseCharacter() const { return OwningBaseCharacter; }
+
 
 };

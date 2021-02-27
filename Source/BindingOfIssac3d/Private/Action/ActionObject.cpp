@@ -7,41 +7,38 @@
 
 void UActionObject::ActionImplementation()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Action()"));
+	UE_LOG(LogTemp, Warning, TEXT("Action called on base class"));
 }
 
 void UActionObject::ActionStart() 
 {
-	UE_LOG(LogTemp, Warning, TEXT("Actionstart()"));
+	UE_LOG(LogTemp, Warning, TEXT("Actionstart called on base class"));
 }
 
 void UActionObject::ActionStop()
 {
-	UE_LOG(LogTemp, Warning, TEXT("ActionStop()"));
-
+	UE_LOG(LogTemp, Warning, TEXT("ActionStop called on base class"));
+	
 }
 
-bool UActionObject::TryInitializeAction(UActionComponent* _OwningActionComponent)
+void UActionObject::InitializeAction(UActionComponent* _OwningActionComponent)
 {
 	OwningActionComponent = _OwningActionComponent;
-	UE_LOG(LogTemp, Warning, TEXT("InitializeAction"));
+	UE_LOG(LogTemp, Warning, TEXT("Ititialize Base"));
 
-	return true;
 }
 
-bool UActionObject::TryUninitializeAction()
+void UActionObject::UninitializeAction()
 {
-	UE_LOG(LogTemp, Warning, TEXT("UninitializeAction"));
 
-	return true;
 }
 
 bool UActionObject::CheckIfActionCanRun()
 {
-	return false;
+	return true;
 }
 
 
 
 
-
+//cancel, stop, 

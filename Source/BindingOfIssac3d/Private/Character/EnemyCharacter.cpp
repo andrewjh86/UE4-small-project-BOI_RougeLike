@@ -11,12 +11,6 @@ AEnemyCharacter::AEnemyCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	//MeshComp->SetupAttachment(GetCapsuleComponent());
-	MeshComp->SetGenerateOverlapEvents(false);
-	MeshComp->SetSimulatePhysics(false);
-	MeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
 
 }
 
@@ -25,6 +19,13 @@ void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+
+}
+
+void AEnemyCharacter::DeathHandle() {
+	Super::DeathHandle();
+	UE_LOG(LogTemp, Warning, TEXT("Enemy Death"));
+
 
 }
 

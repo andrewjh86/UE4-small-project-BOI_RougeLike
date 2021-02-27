@@ -2,7 +2,7 @@
 
 #pragma once
 
-//character special includes
+//GLOBAL character includes:
 #include "Attribute/AttributeComponent.h"
 #include "Melee/ActionComponent.h"
 
@@ -14,11 +14,10 @@
 
 
 class UStaticMeshComponent;
-//class UAttributeComponent;
-//class UActionComponent;
+class USceneComponent;
 
 UCLASS()
-class BINDINGOFISSAC3D_API ABaseCharacter : public ACharacter , public ICharacterInterface
+class BINDINGOFISSAC3D_API ABaseCharacter : public ACharacter, public ICharacterInterface
 {
 	GENERATED_BODY()
 
@@ -26,25 +25,37 @@ public:
 	// Sets default values for this character's properties
 	ABaseCharacter();
 
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = Attribute)	
-	UAttributeComponent* GetAttributeComponent_Implementation() override;
+	UAttributeComponent* GetAttributeComponent_Implementation() const override { return AttributeComponent; }
+
+	UActionComponent* GetActionComponent() const { return ActionComponent; }
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
+	//UFUNCTION(BlueprintCallable, Category = Attribute)
+		virtual void DeathHandle();
+
+
+	//Debug only:
+	UFUNCTION(BlueprintCallable, Category = Debug)
+		void DebugCheckAssignVariables();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Debug)
+		USceneComponent* ShootDebugSceneComponent;
+	USceneComponent* GetShootDebugSceneComponent() { return ShootDebugSceneComponent; }
+	//EndDebug
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "3D Space")
-		UStaticMeshComponent* StaticMeshComponent;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Atribute")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Atribute)
 		UAttributeComponent* AttributeComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Action")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Action)
 		UActionComponent* ActionComponent;
 
-	UFUNCTION(BlueprintCallable, Category = Debug)
-		void DebugCheckAssignVariables();
+
+
 };

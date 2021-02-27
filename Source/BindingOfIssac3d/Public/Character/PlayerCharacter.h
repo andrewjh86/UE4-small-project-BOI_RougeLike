@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Character/BaseCharacter.h"
-#include "TestInterface.h"
 #include "PlayerCharacter.generated.h"
 
 class UInputComponent;
@@ -35,6 +34,8 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float BaseLookUpRate;
+
+	virtual void DeathHandle() override;
 
 protected:
 

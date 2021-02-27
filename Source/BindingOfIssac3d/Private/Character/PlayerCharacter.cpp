@@ -32,11 +32,14 @@ void APlayerCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("SetupPlayerInputComponent"));
-	GEngine->AddOnScreenDebugMessage(2, 4.0f, FColor::Green, FString("PlayerPlay"));
+
 
 }
 
+void APlayerCharacter::DeathHandle() {
+	Super::DeathHandle();
+	UE_LOG(LogTemp, Warning, TEXT("Player Death"));
+}
 
 
 
@@ -53,15 +56,15 @@ void APlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 	PlayerInputComponent->BindAction("Boost_Space", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Boost_Space", IE_Released, this, &ACharacter::StopJumping);
 
-	if (ActionComponent) {
-		UE_LOG(LogTemp, Warning, TEXT("SetupPlayerInputComponent_ActionComponent"));
+	//if (ActionComponent) {
+	//	UE_LOG(LogTemp, Warning, TEXT("SetupPlayerInputComponent_ActionComponent"));
 
-		if (ActionComponent->TryInitializeActionComponent()) {
-			PlayerInputComponent->BindAction("Hit_LMB", IE_Pressed, ActionComponent, &UActionComponent::StartPrimaryAction);
-			PlayerInputComponent->BindAction("Hit_LMB", IE_Released, ActionComponent, &UActionComponent::StopPrimaryAction);;
+	//	if (ActionComponent->TryInitializeActionComponent()) {
+	PlayerInputComponent->BindAction("Hit_LMB", IE_Pressed, ActionComponent, &UActionComponent::StartPrimaryAction);
+	PlayerInputComponent->BindAction("Hit_LMB", IE_Released, ActionComponent, &UActionComponent::StopPrimaryAction);;
 
-		}
-	}
+	//	}
+	//}
 
 	//Move:
 	// Bind movement events

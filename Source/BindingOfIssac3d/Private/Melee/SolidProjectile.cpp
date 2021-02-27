@@ -5,6 +5,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h" 
+#include "Character/BaseCharacter.h"
 
 ASolidProjectile::ASolidProjectile()
 {
@@ -38,12 +39,21 @@ ASolidProjectile::ASolidProjectile()
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
+
+	//Debug:
+	CollisionComp->SetHiddenInGame(false);
+	
 }
 
 
-void ASolidProjectile::SetHitDamage(float amount)
+void ASolidProjectile::InitializeProjectile(float DamageAmount)
 {
-	HitDamage = amount;
+	HitDamage = DamageAmount;
+}
+void ASolidProjectile::InitializeProjectile(float DamageAmount, ABaseCharacter* _OwningCharacter)
+{
+	HitDamage = DamageAmount;
+	OwningCharacter=_OwningCharacter;
 }
 
 void ASolidProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -52,12 +62,13 @@ void ASolidProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, U
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics())
 	{
 		//UE_LOG(LogTemp,log, TEXT("This is hit component: %s"), OtherComp->GetFName());
+
 		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
 		if (OtherActor->CanBeDamaged()) 
 		{
 			FDamageEvent DamageEvent;
-			OtherActor->TakeDamage(HitDamage, DamageEvent,nullptr,GetOwner());
-
+			OtherActor->TakeDamage(HitDamage, DamageEvent,nullptr,this);
+			
 		}
 
 	}

@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "AttributeComponent.generated.h"
 
+DECLARE_DELEGATE(FOnDeath);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BINDINGOFISSAC3D_API UAttributeComponent : public UActorComponent
@@ -15,27 +16,33 @@ class BINDINGOFISSAC3D_API UAttributeComponent : public UActorComponent
 public:	
 	UAttributeComponent();
 
-	//Dynamic
-	bool bIsDead = false;
+	UPROPERTY(EditAnywhere, Category = "Attributes_Dynamic")
+		bool bDead = false;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Attributes_Dynamic")
+	UPROPERTY(EditAnywhere, Category = "Attributes_Dynamic")
+		bool bStun = false;
+
+	UPROPERTY(EditAnywhere, Category = "Attributes_Dynamic")
 		float Health;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Attributes_Dynamic")
+	UPROPERTY(EditAnywhere, Category = "Attributes_Dynamic")
 		float Stamina;
 
-	//Static:
-	UPROPERTY(BlueprintReadOnly, Category = "Attributes_Static")
-		float Defense;
+		FOnDeath OnDeath;
 
-
-
-protected: 
+protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes_Static")
 		float BaseHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes_Static")
 		float BaseStamina;
+
+public:
+	//Stats:
+	UPROPERTY(EditAnywhere, Category = "Attributes_Static")
+		float Defense;
+
+
 
 
 public:	
@@ -51,6 +58,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Attributes_Dynamic")
 		void AddStamina(float amount);
+
 //
 protected:
 	// Called when the game starts

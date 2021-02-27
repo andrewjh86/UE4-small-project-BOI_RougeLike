@@ -3,6 +3,7 @@
 
 #include "Melee/ActionComponent.h"
 #include "Action/ActionObject.h"
+#include "Character/BaseCharacter.h"
 
 
 // Sets default values for this component's properties
@@ -13,6 +14,7 @@ UActionComponent::UActionComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
+
 }
 
 
@@ -20,6 +22,9 @@ UActionComponent::UActionComponent()
 void UActionComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//Initialize objects for character:
+	InitializeActionComponent();
 
 }
 
@@ -34,18 +39,21 @@ void UActionComponent::StopPrimaryAction()
 
 }
 
-bool UActionComponent::TryInitializeActionComponent() {
-	if (PrimaryAction) {
-		return true;
+void UActionComponent::InitializeActionComponent() {
+	
+	
+	if (ABaseCharacter* CurrentOwner = Cast<ABaseCharacter>(GetOwner())) {
+		OwningBaseCharacter = CurrentOwner;
 	}
-	if (PrimaryActionClass) {
-		PrimaryAction = NewObject<UActionObject>(PrimaryActionClass);
 
-		if (PrimaryAction->TryInitializeAction(this)) {
-			return true;
-		}
+	if (PrimaryActionClass) {
+		//PrimaryAction = NewObject<UActionObject>(PrimaryActionClass);
+				//PrimaryAction=CreateDefaultSubobject<UActionObject>(FName("NNN"),PrimaryActionClass);
+		PrimaryAction=NewObject<UActionObject>(this, PrimaryActionClass);
+		
+		PrimaryAction->InitializeAction(this);
+
 	}
-	return false;
 }
 
 bool UActionComponent::TrySwapActionObject() {
@@ -54,11 +62,4 @@ bool UActionComponent::TrySwapActionObject() {
 }
 
 
-//// Called every frame
-//void UActionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-//{
-//	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-//
-//	// ...
-//}
 

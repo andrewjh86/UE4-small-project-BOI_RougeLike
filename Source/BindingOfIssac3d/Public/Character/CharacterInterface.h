@@ -27,5 +27,5 @@ class BINDINGOFISSAC3D_API ICharacterInterface
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = Attribute)
-		 UAttributeComponent* GetAttributeComponent();
+		 UAttributeComponent* GetAttributeComponent() const;
 };
