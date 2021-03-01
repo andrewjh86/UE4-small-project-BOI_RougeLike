@@ -2,9 +2,7 @@
 
 #pragma once
 
-//GLOBAL character includes:
-#include "Attribute/AttributeComponent.h"
-#include "Melee/ActionComponent.h"
+
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
@@ -15,6 +13,9 @@
 
 class UStaticMeshComponent;
 class USceneComponent;
+class UActionComponent;
+class UInventoryComponent;
+class UAttributeComponent;
 
 UCLASS()
 class BINDINGOFISSAC3D_API ABaseCharacter : public ACharacter, public ICharacterInterface
@@ -30,6 +31,8 @@ public:
 	UAttributeComponent* GetAttributeComponent_Implementation() const override { return AttributeComponent; }
 
 	UActionComponent* GetActionComponent() const { return ActionComponent; }
+
+	UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
@@ -55,6 +58,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Action)
 		UActionComponent* ActionComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
+		UInventoryComponent* InventoryComponent;
 
 
 

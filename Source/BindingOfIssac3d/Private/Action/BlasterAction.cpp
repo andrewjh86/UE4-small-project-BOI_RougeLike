@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 
 //Bullet only:
+#include "Items/BaseItem.h"
 #include "Components/SphereComponent.h"
 #include "DrawDebugHelpers.h"
 #include "GameFramework/Actor.h" 
@@ -17,11 +18,10 @@
 //#include "Components/ActorComponent.h"
 
 
+
+
 void UBlasterAction::ActionImplementation()
 {
-	UE_LOG(LogTemp, Warning, TEXT("blaster shoot"));
-
-
 		//const FRotator SpawnRotation = GetComponentRotation(); //FP_MuzzleLocation->GetComponentRotation();
 		//// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 		//const FVector SpawnLocation = GetComponentLocation(); //FP_MuzzleLocation->GetComponentLocation();
@@ -34,17 +34,11 @@ void UBlasterAction::ActionImplementation()
 		//ASolidProjectile* Projectile= World->SpawnActor<ASolidProjectile>(DebugProjectileClass, ShootSceneComponent->GetComponentTransform());
 
 		Projectile->InitializeProjectile(ShootDamage, OwningActionComponent->GetOwningBaseCharacter());
-
-
-
-//// try and play the sound if specified
 //if (FireSound != nullptr)
 //{
 //	UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetComponentLocation());
 //}
 		LastShootTime = CurrentWorld->TimeSeconds;
-	
-
 }
 
 void UBlasterAction::ActionStart()
@@ -60,11 +54,12 @@ void UBlasterAction::ActionStart()
 
 void UBlasterAction::ActionStop()
 {
-
 	//GetOwner()->GetWorldTimerManager().ClearTimer(TimerHandle_TimeBetweenShots);
 	OwningActor->GetWorldTimerManager().ClearTimer(TimerHandle_TimeBetweenShots);
 }
-
+void UBlasterAction::ActionEdit() {
+	
+ }
 void UBlasterAction::InitializeAction(UActionComponent* _OwningActionComponent)
 {
 	
@@ -75,6 +70,11 @@ void UBlasterAction::InitializeAction(UActionComponent* _OwningActionComponent)
 	CurrentWorld=OwningActor->GetWorld();
 
 	UE_LOG(LogTemp, Warning, TEXT("Ititialize blaster"));
+
+}
+
+void UBlasterAction::SwitchToNextAmmo()
+{
 
 }
 

@@ -28,6 +28,8 @@ void UActionComponent::BeginPlay()
 
 }
 
+
+
 void UActionComponent::StartPrimaryAction()
 {
 	PrimaryAction->ActionStart();
@@ -38,10 +40,16 @@ void UActionComponent::StopPrimaryAction()
 	PrimaryAction->ActionStop();
 
 }
+void UActionComponent::EditPrimaryAction()
+{
+	PrimaryAction->ActionEdit();
+
+}
+
 
 void UActionComponent::InitializeActionComponent() {
-	
-	
+
+
 	if (ABaseCharacter* CurrentOwner = Cast<ABaseCharacter>(GetOwner())) {
 		OwningBaseCharacter = CurrentOwner;
 	}
@@ -49,17 +57,10 @@ void UActionComponent::InitializeActionComponent() {
 	if (PrimaryActionClass) {
 		//PrimaryAction = NewObject<UActionObject>(PrimaryActionClass);
 				//PrimaryAction=CreateDefaultSubobject<UActionObject>(FName("NNN"),PrimaryActionClass);
-		PrimaryAction=NewObject<UActionObject>(this, PrimaryActionClass);
-		
+		PrimaryAction = NewObject<UActionObject>(this, PrimaryActionClass);
+
 		PrimaryAction->InitializeAction(this);
 
 	}
 }
-
-bool UActionComponent::TrySwapActionObject() {
-
-	return false;
-}
-
-
 

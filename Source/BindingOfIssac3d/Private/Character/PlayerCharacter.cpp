@@ -1,5 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
+
 #include "Character/PlayerCharacter.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
@@ -8,6 +9,10 @@
 #include "GameFramework/InputSettings.h"
 #include "Kismet/GameplayStatics.h"
 
+//universal character includes:
+#include "Attribute/AttributeComponent.h"
+#include "Melee/ActionComponent.h"
+#include "Items/InventoryComponent.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -62,6 +67,7 @@ void APlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 	//	if (ActionComponent->TryInitializeActionComponent()) {
 	PlayerInputComponent->BindAction("Hit_LMB", IE_Pressed, ActionComponent, &UActionComponent::StartPrimaryAction);
 	PlayerInputComponent->BindAction("Hit_LMB", IE_Released, ActionComponent, &UActionComponent::StopPrimaryAction);;
+	PlayerInputComponent->BindAction("Interact1_RK", IE_Pressed, ActionComponent, &UActionComponent::EditPrimaryAction);
 
 	//	}
 	//}

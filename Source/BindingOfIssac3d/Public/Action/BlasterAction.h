@@ -10,7 +10,7 @@ class USoundBase;
 class ASolidProjectile;
 class USceneComponent;
 class UWorld;
-
+class UBaseItem;
 
 /**
  *
@@ -21,22 +21,26 @@ class BINDINGOFISSAC3D_API UBlasterAction : public UActionObject
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = melee)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = blaster)
 		float ShootDamage = 20;
 
 	/**in seconds the pause between bullets*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = melee)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = blaster)
 		float ShootRate = 0.2f;
 
 	UPROPERTY()
 		float LastShootTime;
 
-	/** Sound to play each time we fire */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = asthetic)
-		USoundBase* FireSound;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = melee)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = blaster)
 		TSubclassOf<ASolidProjectile> DebugProjectileClass;
+
+	UBaseItem* CurrentAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = blaster)
+		TArray<TSubclassOf<UBaseItem>> CompatibleAmmo;
+
+	UFUNCTION(BlueprintCallable, Category = blaster)
+		void SwitchToNextAmmo();
 
 	FTimerHandle TimerHandle_TimeBetweenShots;
 
@@ -52,9 +56,10 @@ protected:
 public:
 	virtual void ActionStart() override;
 	virtual void ActionStop() override;
-		virtual void InitializeAction(UActionComponent* _OwningActionComponent)override;
-		virtual void UninitializeAction()override;
-		virtual bool CheckIfActionCanRun()override;
+	virtual void ActionEdit()override;
+	virtual void InitializeAction(UActionComponent* _OwningActionComponent)override;
+	virtual void UninitializeAction()override;
+	virtual bool CheckIfActionCanRun()override;
 
 
 };

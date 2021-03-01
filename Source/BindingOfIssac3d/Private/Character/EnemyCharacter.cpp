@@ -1,9 +1,13 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+
 
 
 #include "Character/EnemyCharacter.h"
 #include "Components/StaticMeshComponent.h" 
 
+//universal character includes:
+#include "Attribute/AttributeComponent.h"
+#include "Melee/ActionComponent.h"
+#include "Items/InventoryComponent.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()

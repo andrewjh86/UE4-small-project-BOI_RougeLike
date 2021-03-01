@@ -20,6 +20,11 @@ void UActionObject::ActionStop()
 	UE_LOG(LogTemp, Warning, TEXT("ActionStop called on base class"));
 	
 }
+void UActionObject::ActionEdit() {
+	UE_LOG(LogTemp, Warning, TEXT("ActionEdit called on base class"));
+
+ }
+
 
 void UActionObject::InitializeAction(UActionComponent* _OwningActionComponent)
 {

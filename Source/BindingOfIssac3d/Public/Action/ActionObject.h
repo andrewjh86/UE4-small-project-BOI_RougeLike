@@ -23,27 +23,33 @@ class BINDINGOFISSAC3D_API UActionObject : public UObject
 	GENERATED_BODY()
 
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Action")
+	UFUNCTION(BlueprintCallable, Category = Action)
 		virtual void ActionImplementation();
 
 	UPROPERTY()
 		UActionComponent* OwningActionComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Action)
+		USoundBase* ActionSound;
+
 public:
 
-	UFUNCTION(BlueprintCallable, Category = "Action")
+	UFUNCTION(BlueprintCallable, Category = Action)
 		virtual void ActionStart();
 
-	UFUNCTION(BlueprintCallable, Category = "Action")
+	UFUNCTION(BlueprintCallable, Category = Action)
 		virtual void ActionStop();
 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
+	UFUNCTION(BlueprintCallable, Category = Action)
+		virtual void ActionEdit();
+
+	UFUNCTION(BlueprintCallable, Category = Action)
 		virtual void InitializeAction(UActionComponent* _OwningActionComponent);
 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
+	UFUNCTION(BlueprintCallable, Category = Action)
 		virtual void UninitializeAction();
 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
+	UFUNCTION(BlueprintCallable, Category = Action)
 		virtual bool CheckIfActionCanRun();
 
 	UActionComponent* GetOwningActionComponent() const {return OwningActionComponent; }

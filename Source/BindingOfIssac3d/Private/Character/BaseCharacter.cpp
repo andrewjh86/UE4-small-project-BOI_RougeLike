@@ -1,4 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Character/BaseCharacter.h"
@@ -7,6 +6,10 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SceneComponent.h"
 #include "Engine/Engine.h" 
+//universal character includes:
+#include "Attribute/AttributeComponent.h"
+#include "Melee/ActionComponent.h"
+#include "Items/InventoryComponent.h"
 
 
 // Sets default values
@@ -27,6 +30,7 @@ ABaseCharacter::ABaseCharacter()
 	AttributeComponent = CreateDefaultSubobject<UAttributeComponent>(TEXT("AttributeSet"));
 	ActionComponent =CreateDefaultSubobject<UActionComponent>(TEXT("ActionComponent"));
 	//AttributeComponent->OnDeath.BindUFunction(this, FName("DeathHandle"));
+	InventoryComponent= CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 	
 
 	//Debug only:
