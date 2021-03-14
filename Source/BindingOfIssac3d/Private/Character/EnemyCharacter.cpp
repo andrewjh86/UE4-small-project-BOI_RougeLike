@@ -3,6 +3,10 @@
 
 #include "Character/EnemyCharacter.h"
 #include "Components/StaticMeshComponent.h" 
+#include "Perception/AISense_Sight.h"
+#include "Perception/AISense_Hearing.h"
+#include "GameFramework/PlayerController.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
 
 //universal character includes:
 #include "Attribute/AttributeComponent.h"
@@ -24,6 +28,14 @@ void AEnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 
+}
+
+void AEnemyCharacter::on_attack_overlap_begin(UPrimitiveComponent* const overlapped_component, AActor* const other_actor, UPrimitiveComponent* other_component, int const other_body_index, bool const from_sweep, FHitResult const& sweep_result)
+{
+}
+
+void AEnemyCharacter::on_attack_overlap_end(UPrimitiveComponent* const overlapped_component, AActor* const other_actor, UPrimitiveComponent* other_component, int const other_body_index)
+{
 }
 
 void AEnemyCharacter::DeathHandle() {

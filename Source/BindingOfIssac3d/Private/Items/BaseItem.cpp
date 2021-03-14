@@ -4,11 +4,17 @@
 #include "Items/BaseItem.h"
 
 UBaseItem::UBaseItem() {
-	 UniqueItemName = EUniqueItemName::Base;
+	UniqueItemName = EUniqueItemName::Base;
 
 }
 
 void UBaseItem::AddItems(UBaseItem* AddingItem)
 {
 	Amount += AddingItem->Amount;
+}
+
+void  UBaseItem::DecreaseAmount(int _DecreaseAmount)
+{
+	Amount -= _DecreaseAmount;
+
 }

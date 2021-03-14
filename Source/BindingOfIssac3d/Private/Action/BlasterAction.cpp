@@ -11,6 +11,7 @@
 #include "DrawDebugHelpers.h"
 #include "GameFramework/Actor.h" 
 #include "Melee/SolidProjectile.h"
+#include "Items/AmmoItem.h"
 
 //Debug Includes: 
 #include "Components/SceneComponent.h"
@@ -22,23 +23,35 @@
 
 void UBlasterAction::ActionImplementation()
 {
-		//const FRotator SpawnRotation = GetComponentRotation(); //FP_MuzzleLocation->GetComponentRotation();
-		//// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-		//const FVector SpawnLocation = GetComponentLocation(); //FP_MuzzleLocation->GetComponentLocation();
-		//FActorSpawnParameters ActorSpawnParams;
-		//ActorSpawnParams.Owner = GetOwner();
-		////ActorSpawnParams.Instigator = GetOwner(); //for if blaster is owned by pawn
-		//ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+	//const FRotator SpawnRotation = GetComponentRotation(); //FP_MuzzleLocation->GetComponentRotation();
+	//// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+	//const FVector SpawnLocation = GetComponentLocation(); //FP_MuzzleLocation->GetComponentLocation();
+	//FActorSpawnParameters ActorSpawnParams;
+	//ActorSpawnParams.Owner = GetOwner();
+	////ActorSpawnParams.Instigator = GetOwner(); //for if blaster is owned by pawn
+	//ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+	
+	LastShootTime = CurrentWorld->TimeSeconds;
 
-		ASolidProjectile* Projectile = CurrentWorld->SpawnActor<ASolidProjectile>(ShootSceneComponent->GetComponentLocation(), ShootSceneComponent->GetComponentRotation());
-		//ASolidProjectile* Projectile= World->SpawnActor<ASolidProjectile>(DebugProjectileClass, ShootSceneComponent->GetComponentTransform());
+	//handle ammo ammount
+	if (!CurrentAmmo->bUnlimitedQuantity) {
+		if (CurrentAmmo->Amount < 1) {
+			return;
+		}
+		CurrentAmmo->Amount -= 1;
+	}
 
-		Projectile->InitializeProjectile(ShootDamage, OwningActionComponent->GetOwningBaseCharacter());
-//if (FireSound != nullptr)
-//{
-//	UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetComponentLocation());
-//}
-		LastShootTime = CurrentWorld->TimeSeconds;
+	//spawn ammo
+	//ASolidProjectile* Projectile = CurrentWorld->SpawnActor<ASolidProjectile>(CurrentAmmo->ActorClass, ShootSceneComponent->GetComponentLocation(), ShootSceneComponent->GetComponentRotation());
+	ASolidProjectile* Projectile = CurrentWorld->SpawnActor<ASolidProjectile>(CurrentAmmo->ActorClass, ShootSceneComponent->GetComponentTransform());
+	Projectile->InitializeProjectile(ShootDamage, OwningActionComponent->GetOwningBaseCharacter());
+
+	//ammo sound
+	//if (FireSound != nullptr)
+	//{
+	//	UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetComponentLocation());
+	//}
+
 }
 
 void UBlasterAction::ActionStart()
@@ -58,16 +71,16 @@ void UBlasterAction::ActionStop()
 	OwningActor->GetWorldTimerManager().ClearTimer(TimerHandle_TimeBetweenShots);
 }
 void UBlasterAction::ActionEdit() {
-	
- }
+
+}
 void UBlasterAction::InitializeAction(UActionComponent* _OwningActionComponent)
 {
-	
+
 	Super::InitializeAction(_OwningActionComponent);
 	ShootSceneComponent = GetOwningActionComponent()->GetOwningBaseCharacter()->GetShootDebugSceneComponent();
 
 	OwningActor = GetOwningActionComponent()->GetOwner();
-	CurrentWorld=OwningActor->GetWorld();
+	CurrentWorld = OwningActor->GetWorld();
 
 	UE_LOG(LogTemp, Warning, TEXT("Ititialize blaster"));
 

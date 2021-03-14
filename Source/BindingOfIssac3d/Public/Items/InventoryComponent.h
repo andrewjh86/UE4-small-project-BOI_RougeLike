@@ -23,26 +23,30 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Inventory)
 		void AddItemToInventoryFromClass(TSubclassOf<UBaseItem> NewItemClass);
+
 	UFUNCTION(BlueprintPure)
-	TArray<UBaseItem*> GetInventoryList() const  { return InventoryList; };
+		TArray<UAmmoItem*> GetAmmoList() const { return AmmoList; }
 
-	//Ammo list
 	UFUNCTION(BlueprintPure)
-	TArray<UAmmoItem*> GetAmmoList() const { return AmmoList; };
+		TArray<UBaseItem*> GetInventoryList() const { return InventoryList; };
 
-	//health list
+	void InitializeInventory();
 
-	
+
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	//map of amo with ammounts:
-	//TMap<FString,int32> AmmoList;
+	bool FindItemByClass(TSubclassOf<UBaseItem> ItemClass);
 
+	UPROPERTY()
+		TArray<TSubclassOf<UBaseItem>> StartingItems;
 
-	TArray<UBaseItem*> InventoryList;
-	TArray<UAmmoItem*> AmmoList;
+	UPROPERTY()
+		TArray<UBaseItem*> InventoryList;
+
+	UPROPERTY()
+		TArray<UAmmoItem*> AmmoList;
 
 };

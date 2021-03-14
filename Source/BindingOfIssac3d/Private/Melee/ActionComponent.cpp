@@ -4,6 +4,7 @@
 #include "Melee/ActionComponent.h"
 #include "Action/ActionObject.h"
 #include "Character/BaseCharacter.h"
+#include "Items/InventoryComponent.h"
 
 
 // Sets default values for this component's properties
@@ -49,11 +50,13 @@ void UActionComponent::EditPrimaryAction()
 
 void UActionComponent::InitializeActionComponent() {
 
-
+	//character setup:
 	if (ABaseCharacter* CurrentOwner = Cast<ABaseCharacter>(GetOwner())) {
 		OwningBaseCharacter = CurrentOwner;
+		EquiptedInvenotry = OwningBaseCharacter->GetInventoryComponent();
 	}
 
+	//Action setup:
 	if (PrimaryActionClass) {
 		//PrimaryAction = NewObject<UActionObject>(PrimaryActionClass);
 				//PrimaryAction=CreateDefaultSubobject<UActionObject>(FName("NNN"),PrimaryActionClass);

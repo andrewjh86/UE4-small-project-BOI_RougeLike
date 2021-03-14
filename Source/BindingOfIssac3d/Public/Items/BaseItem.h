@@ -10,13 +10,18 @@
  *
  */
 
+
 UENUM(BlueprintType)
 enum class EUniqueItemName : uint8 {
 	Base,
 	Ammo,
 	FireAmmo
 };
-
+//enum class EQuantity : uint8 {
+//	Unlimited ,
+//	Pickup,
+//	ManaDependent
+//};
 
 UCLASS(Blueprintable)
 class BINDINGOFISSAC3D_API UBaseItem : public UObject
@@ -34,11 +39,19 @@ public:
 		TSubclassOf<AActor> ActorClass;
 
 	UPROPERTY(EditAnywhere, Category = Item)
-		int16 Amount;
+		int16 Amount=0;
+
+	UPROPERTY(EditAnywhere, Category = Item)
+		bool bUnlimitedQuantity = true;
 
 	UPROPERTY(EditAnywhere, Category = Item)
 		int8 MaxStack;
 
 	UFUNCTION(BlueprintCallable, Category = Item)
 		virtual void AddItems(UBaseItem* AddingItem);
+
+	UFUNCTION(BlueprintCallable, Category = Item)
+		virtual void DecreaseAmount(int _DecreaseAmount);
+
+
 };

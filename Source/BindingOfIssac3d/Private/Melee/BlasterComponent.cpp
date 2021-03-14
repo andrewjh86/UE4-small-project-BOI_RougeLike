@@ -9,6 +9,7 @@
 #include "GameFramework/Actor.h" 
 #include "Components/ArrowComponent.h"
 #include "Melee/SolidProjectile.h"
+#include "Items/AmmoItem.h"
 
 // Sets default values for this component's properties
 UBlasterComponent::UBlasterComponent()

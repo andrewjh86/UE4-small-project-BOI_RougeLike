@@ -16,23 +16,43 @@ UInventoryComponent::UInventoryComponent()
 }
 
 
+void UInventoryComponent::InitializeInventory()
+{
+	if (StartingItems.Num() > 0) {
+
+		for (TSubclassOf<UBaseItem> StartItemClass : StartingItems) {
+			UBaseItem* NewItem = NewObject< UBaseItem>(GetOwner(), StartItemClass);
+
+		}
+
+	}
+}
 
 
 void UInventoryComponent::AddItemToInventory(UBaseItem* NewItem)
 {
-	if (UBaseItem* NewAmmo = Cast<UBaseItem>(NewItem)) {
-		for (UBaseItem* CheckAmmo : AmmoList)
+	bool bNeedToAddNewSlot = true;
+	if (UAmmoItem* NewAmmo = Cast<UAmmoItem>(NewItem))
+	{
+		for (UAmmoItem* CheckAmmo : AmmoList)
 		{
-			if (CheckAmmo->UniqueItemName == NewAmmo->UniqueItemName) {
-				return;
+			if (CheckAmmo->GetClass() == NewAmmo->GetClass())
+			{
+				CheckAmmo->Amount += NewAmmo->Amount;
+				bNeedToAddNewSlot = false;
+				break;
 			}
 		}
-		
+
+		if (bNeedToAddNewSlot)
+		{
+			AmmoList.Add(NewAmmo);
+		}
 
 	}
 	else {
 
-		//InventoryList.Add()
+		InventoryList.Add(NewItem);
 
 	}
 }
@@ -42,21 +62,17 @@ void UInventoryComponent::AddItemToInventoryFromClass(TSubclassOf<UBaseItem> New
 
 }
 
+bool UInventoryComponent::FindItemByClass(TSubclassOf<UBaseItem> ItemClass) {
+	return false;
+}
+
+
 // Called when the game starts
 void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	UBaseItem* NewAmmo = NewObject< UBaseItem>(this);
-	UBaseItem* NewAmmo1 = NewObject< UBaseItem>(this);
-	NewAmmo1->Amount = 4;
-	UBaseItem* NewAmmo2 = NewObject< UBaseItem>(this);
-	InventoryList.AddUnique(NewAmmo);
-	InventoryList.AddUnique(NewAmmo1);
-	InventoryList.AddUnique(NewAmmo2);
-	
-	UE_LOG(LogTemp, Warning, TEXT("num items: %d"),InventoryList.Num());
+
 
 
 }

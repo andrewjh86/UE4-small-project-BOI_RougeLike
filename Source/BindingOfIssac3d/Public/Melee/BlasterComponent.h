@@ -11,6 +11,7 @@ class ASolidProjectile;
 class USoundBase;
 class ASolidProjectile;
 class USceneComponent;
+class UAmmoItem;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BINDINGOFISSAC3D_API UBlasterComponent : public USceneComponent
@@ -45,6 +46,9 @@ protected:
 
 	UPROPERTY()
 		UArrowComponent* ArrowComponent;
+
+	UPROPERTY()
+		UAmmoItem* CurrentAmmo;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = melee)
 		TSubclassOf<ASolidProjectile> ProjectileClass;

@@ -10,6 +10,7 @@
 
 class UActionObject;
 class ABaseCharacter;
+class UInventoryComponent;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BINDINGOFISSAC3D_API UActionComponent : public UActorComponent
@@ -37,6 +38,9 @@ protected:
 
 	UPROPERTY()
 		ABaseCharacter* OwningBaseCharacter;
+
+	UPROPERTY()
+		UInventoryComponent* EquiptedInvenotry;
 
 public:
 

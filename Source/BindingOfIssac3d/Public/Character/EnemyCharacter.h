@@ -6,7 +6,6 @@
 #include "Character/BaseCharacter.h"
 #include "EnemyCharacter.generated.h"
 
-class UStaticMeshComponent;
 
 UCLASS()
 class BINDINGOFISSAC3D_API AEnemyCharacter : public ABaseCharacter
@@ -22,8 +21,21 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	UFUNCTION()
+		void on_attack_overlap_begin(
+			UPrimitiveComponent* const overlapped_component,
+			AActor* const other_actor,
+			UPrimitiveComponent* other_component,
+			int const other_body_index,
+			bool const from_sweep,
+			FHitResult const& sweep_result);
 
-
+	UFUNCTION()
+		void on_attack_overlap_end(
+			UPrimitiveComponent* const overlapped_component,
+			AActor* const other_actor,
+			UPrimitiveComponent* other_component,
+			int const other_body_index);
 
 public:	
 	// Called every frame

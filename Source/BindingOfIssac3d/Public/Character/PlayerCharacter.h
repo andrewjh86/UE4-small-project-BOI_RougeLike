@@ -13,6 +13,9 @@ class UMotionControllerComponent;
 class UAnimMontage;
 class USoundBase;
 class USpringArmComponent;
+class UAIPerceptionStimuliSourceComponent;
+class UAnimMontage;
+
 
 UCLASS(config = Game)
 class APlayerCharacter : public ABaseCharacter
@@ -38,6 +41,17 @@ public:
 	virtual void DeathHandle() override;
 
 protected:
+
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+	//	USoundBase* distraction_sound;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
+	//	UAnimMontage* montage;
+
+	//class UAIPerceptionStimuliSourceComponent* stimulus;
+
+	//void setup_stimulus();
 
 
 	/** First person camera */
@@ -67,6 +81,9 @@ protected:
 
 	//pawn setup 
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
+
+	//void on_attack();
+//void on_distract();
 
 	void DebugInteract();
 

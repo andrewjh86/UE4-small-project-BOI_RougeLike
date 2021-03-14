@@ -29,7 +29,7 @@ ABaseCharacter::ABaseCharacter()
 	SetCanBeDamaged(true);
 	AttributeComponent = CreateDefaultSubobject<UAttributeComponent>(TEXT("AttributeSet"));
 	ActionComponent =CreateDefaultSubobject<UActionComponent>(TEXT("ActionComponent"));
-	//AttributeComponent->OnDeath.BindUFunction(this, FName("DeathHandle"));
+	AttributeComponent->OnDeath.BindUFunction(this, FName("DeathHandle"));
 	InventoryComponent= CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 	
 
@@ -49,6 +49,8 @@ float ABaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 }
 
 void ABaseCharacter::DeathHandle() {
+
+
 	UE_LOG(LogTemp, Warning, TEXT("Death"));
 	
 

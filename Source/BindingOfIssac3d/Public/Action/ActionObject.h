@@ -12,14 +12,16 @@
 
 
 class UActionComponent;
+
+
 /**
  *
  */
-
- //UCLASS(BlueprintType, Blueprintable,  meta = (ShortTooltip = "For making special abilities."))
 UCLASS(Blueprintable)
 class BINDINGOFISSAC3D_API UActionObject : public UObject
 {
+	friend class UActionComponent;
+
 	GENERATED_BODY()
 
 protected:

@@ -10,7 +10,7 @@ class USoundBase;
 class ASolidProjectile;
 class USceneComponent;
 class UWorld;
-class UBaseItem;
+class UAmmoItem;
 
 /**
  *
@@ -34,10 +34,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = blaster)
 		TSubclassOf<ASolidProjectile> DebugProjectileClass;
 
-	UBaseItem* CurrentAmmo;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = blaster)
-		TArray<TSubclassOf<UBaseItem>> CompatibleAmmo;
+		UAmmoItem* CurrentAmmo;
 
 	UFUNCTION(BlueprintCallable, Category = blaster)
 		void SwitchToNextAmmo();
